@@ -15,7 +15,7 @@ import { getProductionSearchEngine } from "./production/production-search-engine
 import { GlobalHotKey } from "../common/global-hot-key/global-hot-key";
 import { defaultGeneralOptions } from "../common/config/general-options";
 import { getErrorSearchResultItem } from "../common/error-search-result-item";
-import { FileHelpers } from "./../common/helpers/file-helpers";
+import { FileHelpers } from "../common/helpers/file-helpers";
 import { ueliTempFolder, logFilePath } from "../common/helpers/ueli-helpers";
 import { getTranslationSet } from "../common/translation/translation-set-manager";
 import { trayIconPathWindows, trayIconPathMacOs } from "./helpers/tray-icon-helpers";
@@ -60,6 +60,12 @@ if (operatingSystem === OperatingSystem.macOS) {
 
 if (operatingSystem === OperatingSystem.Windows) {
     addPowershellToPathVariableIfMissing();
+}
+
+if (operatingSystem === OperatingSystem.Windows) {
+    // Fix to prevent the app to flash twice on Windows
+    // https://github.com/electron/electron/issues/22691
+    app.commandLine.appendSwitch("wm-window-animations-disabled");
 }
 
 let trayIcon: Tray;
